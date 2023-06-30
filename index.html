@@ -19,7 +19,7 @@
     function generateQuestion() {
       var num1 = Math.floor(Math.random() * 10) + 1; // Tilfeldig tall fra 1 til 10
       var num2 = Math.floor(Math.random() * 10) + 1; // Tilfeldig tall fra 1 til 10
-      var operator = Math.random() < 0.5 ? "+" : "-":"*"; // Velger tilfeldig mellom addisjon og subtraksjon
+      var operator = Math.random() < 0.5 ? "+" : "-"; // Velger tilfeldig mellom addisjon og subtraksjon
 
       // Viser oppgaven til brukeren
       var questionElement = document.getElementById("question");
