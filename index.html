@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sommer oppgaver i matte - Hvor mange klarer du?</title>
+  <title>Tilfeldige matteoppgaver</title>
   <style>
     body {
       background-color: green;
@@ -13,20 +13,25 @@
     }
   </style>
   <script>
-    var numQuestions = 100; // Antall spørsmål du vil ha
+    var numQuestions = 5; // Antall spørsmål du vil ha
     var numCorrectAnswers = 0; // Teller for antall riktige svar
 
     function generateQuestion() {
-      var num1 = Math.floor(Math.random() * 3) + 7; // Tilfeldig tall fra 7 til 9
+      var num1 = Math.floor(Math.random() * 10) + 1; // Tilfeldig tall fra 1 til 10
       var num2 = Math.floor(Math.random() * 10) + 1; // Tilfeldig tall fra 1 til 10
+      var operator = Math.random() < 0.5 ? "+" : "-"; // Velger tilfeldig mellom addisjon og subtraksjon
 
       // Viser oppgaven til brukeren
       var questionElement = document.getElementById("question");
-      questionElement.innerHTML = num1 + " &times; " + num2 + " = ";
+      questionElement.innerHTML = num1 + " " + operator + " " + num2 + " = ";
 
       // Lagrer riktig svar i et skjult felt for evaluering senere
       var answerElement = document.getElementById("answer");
-      answerElement.value = num1 * num2;
+      if (operator === "+") {
+        answerElement.value = num1 + num2;
+      } else {
+        answerElement.value = num1 - num2;
+      }
     }
 
     function checkAnswer() {
@@ -72,7 +77,7 @@
   </script>
 </head>
 <body onload="generateQuestion()">
-  <h1>Sommer oppgaver i matte - Hvor mange klarer du?</h1>
+  <h1>Tilfeldige matteoppgaver</h1>
   <input type="text" id="name-input" placeholder="Skriv inn navnet ditt">
   <div id="question"></div>
   <input type="text" id="user-answer" onkeypress="handleKeyPress(event)">
