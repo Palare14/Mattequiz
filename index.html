@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sommer oppgaver i matte - Hvor mange klarer du?</title>
+  <style>
+    body {
+      background-color: green;
+    }
+
+    .feedback {
+      font-weight: bold;
+      color: blue;
+    }
+  </style>
+  <script>
+    var numQuestions = 100; // Antall spørsmål du vil ha
+    var numCorrectAnswers = 0; // Teller for antall riktige svar
+
+    function generateQuestion() {
+      var num1 = Math.floor(Math.random() * 10) + 1; // Tilfeldig tall fra 1 til 10
+      var num2 = Math.floor(Math.random() * 10) + 1; // Tilfeldig tall fra 1 til 10
+      var operator = Math.random() < 0.5 ? "+" : "-":"*"; // Velger tilfeldig mellom addisjon og subtraksjon
+
+      // Viser oppgaven til brukeren
+      var questionElement = document.getElementById("question");
+      questionElement.innerHTML = num1 + " " + operator + " " + num2 + " = ";
+
+      // Lagrer riktig svar i et skjult felt for evaluering senere
+      var answerElement = document.getElementById("answer");
+      if (operator === "+") {
+        answerElement.value = num1 + num2;
+      } else {
+        answerElement.value = num1 - num2;
+      }
+    }
+
+    function checkAnswer() {
+      var userAnswer = document.getElementById("user-answer").value;
+      var correctAnswer = document.getElementById("answer").value;
+      var resultElement = document.getElementById("result");
+      var name = document.getElementById("name-input").value;
+
+      if (userAnswer == correctAnswer) {
+        resultElement.innerHTML = '<span class="feedback">Bra ' + name + '!</span>';
+        numCorrectAnswers++; // Øker telleren for riktige svar
+      } else {
+        resultElement.innerHTML = "Feil. Prøv igjen.";
+      }
+
+      // Oppdaterer telleren for riktige svar på siden
+      var scoreElement = document.getElementById("score");
+      scoreElement.innerHTML = "Antall riktige svar: " + numCorrectAnswers;
+
+      // Generer neste spørsmål eller avslutt hvis alle spørsmål er besvart
+      numQuestions--;
+      if (numQuestions > 0) {
+        setTimeout(function() {
+          generateQuestion();
+          document.getElementById("user-answer").value = ""; // Tømmer svaret
+          resultElement.innerHTML = ""; // Fjerner tidligere tilbakemelding
+        }, 1000); // Venter 1 sekund før neste spørsmål vises
+      } else {
+        setTimeout(function() {
+          questionElement.innerHTML = "Alle spørsmål besvart!";
+          document.getElementById("user-answer").disabled = true;
+          document.getElementById("name-input").disabled = true;
+          document.getElementById("check-button").disabled = true;
+        }, 1000); // Venter 1 sekund før avslutningsmeldingen vises
+      }
+    }
+
+    function handleKeyPress(event) {
+      if (event.keyCode === 13) {
+        checkAnswer();
+      }
+    }
+  </script>
+</head>
+<body onload="generateQuestion()">
+  <h1>Tilfeldige matteoppgaver</h1>
+  <input type="text" id="name-input" placeholder="Skriv inn navnet ditt">
+  <div id="question"></div>
+  <input type="text" id="user-answer" onkeypress="handleKeyPress(event)">
+  <button id="check-button" onclick="checkAnswer()">Sjekk svar</button>
+  <div id="result"></div>
+  <div id="score">Antall riktige svar: 0</div>
+
+  <input type="hidden" id="answer">
+</body>
+</html>
